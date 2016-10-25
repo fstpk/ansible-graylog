@@ -1,0 +1,10 @@
+---
+
+- name: Install apt https support
+  apt: name=apt-transport-https update_cache=yes
+
+- name: Add Graylog repository key
+  apt_key: url={{ graylog.repository.debian.gpgkey }} state=present
+
+- name: Add Graylog repository
+  apt_repository: repo={{ graylog.repository.debian.baseurl }} state=present

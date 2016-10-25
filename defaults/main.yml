@@ -1,0 +1,77 @@
+graylog:
+  service:
+    name: graylog
+    config_path: '/etc/graylog'
+
+
+  repository:
+    redhat:
+      baseurl: 'https://packages.graylog2.org/repo/el/stable/2.1/$basearch/'
+      gpgkey: 'https://github.com/Graylog2/fpm-recipes/blob/master/recipes/graylog-repository/files/rpm/RPM-GPG-KEY-graylog'
+    debian:
+      baseurl: 'https://packages.graylog2.org/repo/debian/'
+      gpgkey: 'https://github.com/Graylog2/fpm-recipes/blob/master/recipes/graylog-repository/files/rpm/RPM-GPG-KEY-graylog'
+
+
+
+#################### graylog settings ####################
+  options:
+    host: {{ groups[ 'graylog-node' ] | first }}
+    web_listen_port: 9000
+    rest_api_port: 9000
+    rest_transport_port: 12900
+    elasticsearch_host: {{ groups[ 'elasticsearch-node' ] | first }}
+    elasticsearch_transport_port: 9300
+    is_master: true
+    password_secret: 
+    root_username: admin
+    root_password_sha2:
+    root_email: 
+    timezone: UTC
+    plugin_dir: /usr/share/graylog-server/plugin/
+    rest_enable_cors: false
+    rest_enable_gzip: true
+    rest_enable_tls: false
+    rest_tls_cert_file: /path/to/graylog.crt
+    rest_tls_key_file: /path/to/graylog.key
+    rest_tls_key_password: 
+    rest_max_header_size: 8192
+    rest_max_initial_line_length: 4096
+    rest_thread_pool_size: 16
+    trusted_proxies: [{{ '\"' + groups[  'proxy'  ] | join('/32\", \"')  + '/32\"' }}]
+    web_enable: true
+    web_endpoint_url: 
+    web_enable_cors: false
+    web_enable_gzip: true
+    web_enable_tls: false
+    web_tls_cert_file: /path/to/graylog-web.crt
+    web_tls_key_file: /path/to/graylog-web.key
+    web_tls_key_password: secret
+    web_max_header_size: 8192
+    web_max_initial_line_length: 4096
+    web_thread_pool_size: 16
+    rotation_strategy: count
+    elasticsearch_max_docs_per_index: 20000000
+    elasticsearch_max_size_per_index: 1073741824
+    elasticsearch_max_time_per_index: 1d
+    elasticsearch_disable_version_check: true
+    no_retention: false
+    elasticsearch_max_number_of_indices: 20
+    retention_strategy: delete
+    output_batch_size: 500
+    output_flush_interval: 1
+    output_fault_count_threshold: 5
+    output_fault_penalty_seconds: 30
+    processbuffer_processors: 5
+    outputbuffer_processors: 3
+    processor_wait_strategy: blocking
+    ring_size: 65536
+    inputbuffer_ring_size: 65536
+    inputbuffer_processors: 2
+    inputbuffer_wait_strategy: blocking
+    message_journal_enabled: true
+    message_journal_dir: /var/spool/graylog
+    lb_recognition_period_seconds: 3
+    mongodb_uri: mongodb://{{ groups[ 'mongodb-node' ] | first }}/graylog
+    mongodb_max_connections: 1000
+    mongodb_threads_allowed_to_block_multiplier: 5

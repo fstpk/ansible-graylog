@@ -1,0 +1,14 @@
+---
+
+- name: Add Graylog repository key
+  rpm_key: key={{ graylog.repository.redhat.gpgkey }} state=present
+
+- name: Add Graylog repository
+  yum_repository:
+    name: graylog
+    description: Graylog Repository
+    file: graylog
+    baseurl: "{{ graylog.repository.redhat.baseurl }}"
+    gpgkey: "{{ graylog.repository.redhat.gpgkey }}"
+    gpgcheck: yes
+    enabled: yes

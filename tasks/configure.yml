@@ -1,0 +1,10 @@
+---
+- name: Create directory for included configs
+  file: path={{ graylog.service.config_path }}/
+        state=directory
+        mode=644
+
+- name: Copy graylog service config
+  template: src=graylog.conf.j2 dest={{ graylog.service.config_path }}/server.conf
+            mode=644
+

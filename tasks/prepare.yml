@@ -1,0 +1,9 @@
+---
+
+- name: "Prepare CentOS"
+  include: rhel/prepare.yml
+  when: (ansible_os_family == "RedHat")
+
+- name: "Prepare Debian"
+  include: debian/prepare.yml
+  when: (ansible_os_family == "Debian")

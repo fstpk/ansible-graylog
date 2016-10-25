@@ -1,0 +1,4 @@
+---
+
+- name: Restart graylog service
+  service: name="{{ graylog.service.name }}" state=restarted

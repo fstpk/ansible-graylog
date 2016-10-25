@@ -1,0 +1,7 @@
+---
+
+- name: Install graylog service
+  package: name=graylog update_cache=yes
+
+- name: Enable graylog autostart
+  service: name=graylog enabled=yes
